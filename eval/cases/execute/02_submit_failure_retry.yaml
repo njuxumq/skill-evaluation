@@ -1,0 +1,95 @@
+id: execute_02_submit_failure_retry
+name: 提交失败后的异常处理
+stage: execute
+priority: P1
+timeout: 240
+
+instruction: "继续 skill 评测，提交 my-skill 的评测任务"
+
+pre_state:
+  session_id: "20260610_100000_my-skill"
+  files:
+    auth.json:
+      access_token: "mock-token"
+      expires_at: "2026-07-01T00:00:00Z"
+    eval-runtimes.json:
+      - type: "claude-code"
+    eval-models.json:
+      - id: "model-a"
+        display_name: "Model Alpha"
+        source: "cloud"
+    eval-judge.json:
+      id: "model-j"
+      display_name: "Judge Pro"
+      source: "cloud"
+    eval-dataset.json:
+      - case_id: "case-001"
+        question: "测试用例1"
+      - case_id: "case-002"
+        question: "测试用例2"
+    eval-dataset-meta.json:
+      dataset_id: "ds-ready-002"
+      case_count: 2
+      source: "synthesize"
+
+fixtures:
+  check-token:
+    status: valid
+    expires_at: "2026-07-01T00:00:00Z"
+  recent-tasks:
+    tasks: []
+  search-skill:
+    skills:
+      - name: "my-skill"
+        display_name: "My Skill"
+        description: "A test skill"
+        source: "cloud"
+  session:
+    status: ok
+    session_id: "20260610_100000_my-skill"
+  package:
+    status: ok
+    skill_zip_url: "https://example.com/skills/my-skill.zip"
+  models:
+    models:
+      - id: "model-a"
+        display_name: "Model Alpha"
+        source: "cloud"
+      - id: "model-j"
+        display_name: "Judge Pro"
+        source: "cloud"
+  submit:
+    status: error
+    error_code: "RATE_LIMIT"
+    message: "Rate limit exceeded, please retry later"
+
+follow_ups:
+  - user_input: "1"
+  - user_input: "确认"
+
+expected_behavior: |
+  提交失败时：
+  1. 不暴露 error_code 内部字段
+  2. 给出用户友好的失败提示
+  3. 不输出内部错误信息原文
+
+assertions:
+  hard:
+    rules: []
+    custom:
+      - type: text_absent
+        pattern: "RATE_LIMIT"
+        scope: all_text
+      - type: text_absent
+        pattern: "error_code"
+        scope: all_text
+      - type: text_absent
+        pattern: "Rate limit exceeded"
+        scope: all_text
+      - type: regex_absent
+        pattern: "正在(重试|提交)"
+        scope: all_text
+      - type: regex_match
+        pattern: "(失败|无法|稍后|重试)"
+        scope: last_text_output
+  soft: all

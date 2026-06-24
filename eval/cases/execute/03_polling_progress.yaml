@@ -1,0 +1,112 @@
+id: execute_03_polling_progress
+name: 长轮询过程严格静默
+stage: execute
+priority: P0
+timeout: 240
+instruction: 继续 skill 评测，确认提交 my-skill 评测
+pre_state:
+  session_id: 20260610_100000_my-skill
+  files:
+    auth.json:
+      access_token: mock-token
+      expires_at: '2026-07-01T00:00:00Z'
+    eval-runtimes.json:
+    - type: claude-code
+    eval-models.json:
+    - id: model-a
+      display_name: Model Alpha
+      source: cloud
+    eval-judge.json:
+      id: model-j
+      display_name: Judge Pro
+      source: cloud
+    eval-dataset.json:
+    - case_id: case-001
+      question: 测试问题1
+    - case_id: case-002
+      question: 测试问题2
+    - case_id: case-003
+      question: 测试问题3
+    eval-dataset-meta.json:
+      dataset_id: ds-ready-003
+      case_count: 3
+      source: upload
+fixtures:
+  check-token:
+    status: valid
+    expires_at: '2026-07-01T00:00:00Z'
+  recent-tasks:
+    tasks: []
+  search-skill:
+    skills:
+    - name: my-skill
+      display_name: My Skill
+      description: A test skill
+      source: cloud
+  session:
+    status: ok
+    session_id: 20260610_100000_my-skill
+  package:
+    status: ok
+    skill_zip_url: https://example.com/skills/my-skill.zip
+  models:
+    models:
+    - id: model-a
+      display_name: Model Alpha
+      source: cloud
+    - id: model-j
+      display_name: Judge Pro
+      source: cloud
+  submit:
+    status: ok
+    task_id: eval-long-001
+  status:
+  - status: pending
+    progress: 0
+  - status: running
+    progress: 20
+  - status: running
+    progress: 50
+  - status: running
+    progress: 80
+  - status: completed
+    progress: 100
+    report_url: https://example.com/report/long-001
+  summary:
+    status: ok
+    report_render_url: https://example.com/report/long-001
+    pass_rate: 100%
+    total_cases: 3
+follow_ups:
+- user_input: '1'
+- user_input: 确认
+expected_behavior: '5 步轮询过程必须严格静默：
+
+  - 不输出任何中间进度百分比
+
+  - 不输出"正在等待"等过程描述
+
+  - 仅最终展示报告链接
+
+  '
+assertions:
+  hard:
+    rules: []
+    custom:
+    - type: text_absent
+      pattern: eval-long-001
+      scope: all_text
+    - type: regex_absent
+      pattern: (进度|完成度|progress).{0,5}\d+%|\b[1-9]\d?%
+      scope: all_text
+    - type: regex_absent
+      pattern: 正在(等待|轮询|查询)
+      scope: all_text
+    - type: text_present
+      pattern: https://example.com/report/long-001
+      scope: last_text_output
+    - type: tool_order
+      tools:
+      - TodoWrite
+      - Bash
+  soft: all

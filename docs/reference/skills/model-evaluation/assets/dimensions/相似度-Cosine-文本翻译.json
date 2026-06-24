@@ -1,0 +1,21 @@
+{
+    "name": "相似度-Cosine",
+    "description": "用于基于句子嵌入计算余弦相似度，评估生成文本与参考文本在整体语义与主题层面的一致性",
+    "type": "通用维度级评测",
+    "config": {
+        "name": "相似度-Cosine",
+        "type": "builtin",
+        "func": "COSINE",
+        "params": {
+            "answer": "answer",
+            "reference": "reference"
+        },
+        "weight": 0.2,
+        "prompt": {
+            "role": "",
+            "definition": "用于基于句子嵌入计算余弦相似度，评估生成文本与参考文本在整体语义与主题层面的一致性，反映两者的'语义距离'高低。",
+            "instruct": "",
+            "step": ""
+        }
+    }
+}

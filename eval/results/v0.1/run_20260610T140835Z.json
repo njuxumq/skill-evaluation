@@ -1,0 +1,79 @@
+{
+  "version": "v0.1",
+  "model": "xopglm51",
+  "timestamp": "2026-06-10T14:08:35.717836+00:00",
+  "summary": {
+    "total_cases": 1,
+    "total_runs": 1,
+    "trigger_rate": 1.0,
+    "pass": 1,
+    "fail": 0,
+    "skip": 0,
+    "unstable": 0,
+    "verdict": "PASS"
+  },
+  "cases": {
+    "init_01_fresh_no_history": {
+      "priority": "P0",
+      "verdict": "PASS",
+      "trigger_rate": 1.0,
+      "pass_rate": 1.0,
+      "detail": "1/1 pass",
+      "runs": [
+        {
+          "verdict": "PASS",
+          "duration": 90.69801116781309,
+          "transcript": "/home/mqxu11/projects/claude/skill-evaluation/eval/results/v0.1/workspaces/init_01_fresh_no_history_run0/transcript.jsonl",
+          "error": null,
+          "hard_results": [
+            {
+              "rule": "H1",
+              "passed": true,
+              "message": ""
+            },
+            {
+              "rule": "H2",
+              "passed": true,
+              "message": ""
+            },
+            {
+              "rule": "H3",
+              "passed": true,
+              "message": ""
+            },
+            {
+              "rule": "H4",
+              "passed": true,
+              "message": ""
+            },
+            {
+              "rule": "H5",
+              "passed": true,
+              "message": ""
+            },
+            {
+              "rule": "H6",
+              "passed": true,
+              "message": ""
+            },
+            {
+              "rule": "H9",
+              "passed": true,
+              "message": ""
+            },
+            {
+              "rule": "semantic_match",
+              "passed": true,
+              "message": "⚠ judge skipped: \"Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\""
+            },
+            {
+              "rule": "text_absent",
+              "passed": true,
+              "message": ""
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

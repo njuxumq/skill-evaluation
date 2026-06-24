@@ -1,0 +1,21 @@
+{
+    "name": "精确性-COMET",
+    "description": "用于基于上下文感知模型的翻译质量评估，从语义正确性、表达流畅度和忠实性三个维度综合判断",
+    "type": "通用维度级评测",
+    "config": {
+        "name": "精确性-COMET",
+        "type": "builtin",
+        "func": "COMET",
+        "params": {
+            "answer": "answer",
+            "reference": "reference"
+        },
+        "weight": 0.3,
+        "prompt": {
+            "role": "",
+            "definition": "用于基于上下文感知模型的翻译质量评估，从语义正确性、表达流畅度和忠实性三个维度综合判断生成文本是否准确传达参考文本的含义。",
+            "instruct": "",
+            "step": ""
+        }
+    }
+}

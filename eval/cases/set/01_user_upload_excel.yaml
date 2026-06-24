@@ -1,0 +1,78 @@
+id: set_01_user_upload_excel
+name: 用户上传 Excel 评测集
+stage: set
+priority: P0
+timeout: 180
+instruction: 继续 skill 评测，为 my-skill 上传评测数据
+pre_state:
+  session_id: 20260610_100000_my-skill
+  files:
+    auth.json:
+      access_token: mock-token
+      expires_at: '2026-07-01T00:00:00Z'
+    eval-runtimes.json:
+    - type: claude-code
+    eval-models.json:
+    - id: model-a
+      display_name: Model Alpha
+      source: cloud
+    eval-judge.json:
+      id: model-j
+      display_name: Judge Pro
+      source: cloud
+fixtures:
+  check-token:
+    status: valid
+    expires_at: '2026-07-01T00:00:00Z'
+  recent-tasks:
+    tasks: []
+  search-skill:
+    skills:
+    - name: my-skill
+      display_name: My Skill
+      description: A test skill
+      source: cloud
+  session:
+    status: ok
+    session_id: 20260610_100000_my-skill
+  package:
+    status: ok
+    skill_zip_url: https://example.com/skills/my-skill.zip
+  models:
+    models:
+    - id: model-a
+      display_name: Model Alpha
+      source: cloud
+    - id: model-j
+      display_name: Judge Pro
+      source: cloud
+  upload-dataset:
+    status: ok
+    dataset_id: ds-upload-001
+  check-dataset:
+    needs_completion: false
+    missing_fields: []
+    empty_category_count: 0
+    empty_keypoint_count: 0
+expected_behavior: '用户要上传 Excel 时，静默验证格式并上传。
+
+  不暴露 dataset-id 等内部标识。
+
+  '
+assertions:
+  hard:
+    rules: []
+    custom:
+    - type: text_absent
+      pattern: dataset-id
+      scope: all_text
+    - type: text_absent
+      pattern: ds-upload-001
+      scope: all_text
+    - type: text_absent
+      pattern: 正在上传
+      scope: all_text
+    - type: text_absent
+      pattern: 正在验证
+      scope: all_text
+  soft: all

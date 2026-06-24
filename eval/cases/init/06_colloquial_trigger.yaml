@@ -1,0 +1,30 @@
+id: init_06_colloquial_trigger
+name: 口语化输入触发测试
+stage: init
+priority: P1
+
+instruction: "帮我跑一下skill评测看看效果"
+
+fixtures:
+  check-token:
+    status: valid
+    expires_at: "2026-07-01T00:00:00Z"
+  recent-tasks:
+    tasks: []
+
+expected_behavior: |
+  口语化输入仍应能触发 Skill，展示自然语言引导。
+  此用例主要测试触发率，行为验证与 init_01 类似。
+
+assertions:
+  hard:
+    rules: ["H9"]
+    custom:
+      - type: semantic_match
+        pattern: "引导用户描述评测需求"
+        scope: all_text
+      - type: tool_param_check
+        tool: TodoWrite
+        param_path: "todos.0.content"
+        expected: "确认评测场景"
+  soft: all

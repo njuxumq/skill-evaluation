@@ -1,0 +1,114 @@
+id: set_04_datamaker_synthesize
+name: datamaker 合成评测集完整流程
+stage: set
+priority: P0
+timeout: 180
+instruction: 继续 skill 评测，为 my-skill 自动生成评测数据
+pre_state:
+  session_id: 20260610_100000_my-skill
+  files:
+    auth.json:
+      access_token: mock-token
+      expires_at: '2026-07-01T00:00:00Z'
+    eval-runtimes.json:
+    - type: claude-code
+    eval-models.json:
+    - id: model-a
+      display_name: Model Alpha
+      source: cloud
+    eval-judge.json:
+      id: model-j
+      display_name: Judge Pro
+      source: cloud
+fixtures:
+  check-token:
+    status: valid
+    expires_at: '2026-07-01T00:00:00Z'
+  recent-tasks:
+    tasks: []
+  search-skill:
+    skills:
+    - name: my-skill
+      display_name: My Skill
+      description: A test skill
+      source: cloud
+  session:
+    status: ok
+    session_id: 20260610_100000_my-skill
+  package:
+    status: ok
+    skill_zip_url: https://example.com/skills/my-skill.zip
+  models:
+    models:
+    - id: model-a
+      display_name: Model Alpha
+      source: cloud
+    - id: model-j
+      display_name: Judge Pro
+      source: cloud
+  datamaker:
+    status: ok
+    task_id: dm-task-555
+  datamaker-status:
+  - status: pending
+    progress: 0
+  - status: running
+    progress: 40
+  - status: running
+    progress: 80
+  - status: completed
+    progress: 100
+    dataset_id: ds-gen-555
+    case_count: 5
+  list-dataset:
+    status: ok
+    cases:
+    - case_id: case-001
+      question: 合成用例1
+      category: 功能测试
+    - case_id: case-002
+      question: 合成用例2
+      category: 功能测试
+    - case_id: case-003
+      question: 合成用例3
+      category: 边界测试
+    - case_id: case-004
+      question: 合成用例4
+      category: 功能测试
+    - case_id: case-005
+      question: 合成用例5
+      category: 异常测试
+expected_behavior: '自动合成流程：
+
+  1. 静默调用 datamaker 启动合成
+
+  2. 轮询 datamaker-status 直到 completed
+
+  3. 全程不暴露 task_id、dataset_id
+
+  4. 完成后简短确认条数
+
+  '
+assertions:
+  hard:
+    rules: []
+    custom:
+    - type: text_absent
+      pattern: dm-task-555
+      scope: all_text
+    - type: text_absent
+      pattern: ds-gen-555
+      scope: all_text
+    - type: text_absent
+      pattern: datamaker
+      scope: all_text
+    - type: regex_absent
+      pattern: \d+%
+      scope: all_text
+    - type: tool_order
+      tools:
+      - TodoWrite
+      - Bash
+    - type: tool_called
+      tool: Bash
+  soft: all

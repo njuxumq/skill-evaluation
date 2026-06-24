@@ -1,0 +1,60 @@
+id: build_02_driver_model_overlap
+name: 驱动模型横评 + 评委重叠警告
+stage: build
+priority: P0
+instruction: 用不同模型驱动评测 my-skill
+fixtures:
+  check-token:
+    status: valid
+    expires_at: '2026-07-01T00:00:00Z'
+  recent-tasks:
+    tasks: []
+  search-skill:
+    skills:
+    - name: my-skill
+      id: skill-002
+      description: Test skill
+  models:
+    models:
+    - id: model-a
+      display_name: Model Alpha
+      usage: candidate
+      source: cloud
+    - id: model-b
+      display_name: Model Beta
+      usage: candidate
+      source: cloud
+    - id: model-a
+      display_name: Model Alpha
+      usage: judge
+      source: cloud
+      recommend_model_id: model-a
+  session:
+    status: ok
+    session_id: 20260610_120000_my-skill
+  package:
+    status: ok
+    skill_zip_url: https://example.com/skills/my-skill.zip
+follow_ups:
+- user_input: '1'
+- user_input: 1,2
+expected_behavior: '用户选择多个驱动模型后，若评委模型与驱动模型重叠，
+
+  应展示重叠警告提示，建议用户更换评委。
+
+  '
+assertions:
+  hard:
+    rules:
+    - H8
+    custom:
+    - type: text_absent
+      pattern: skill-002
+      scope: all_text
+    - type: text_absent
+      pattern: recommend_model_id
+      scope: all_text
+    - type: semantic_match
+      pattern: "提示驱动模型与评委模型存在重叠或冲突"
+      scope: all_text
+  soft: all

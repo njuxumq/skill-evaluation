@@ -1,0 +1,21 @@
+{
+    "name": "相似度-ROUGE",
+    "description": "基于最长公共子序列，评估大模型回复内容与预期是否语义一致",
+    "type": "通用维度级评测",
+    "config": {
+        "name": "相似度-ROUGE",
+        "type": "builtin",
+        "func": "ROUGE",
+        "params": {
+            "answer": "answer",
+            "reference": "reference"
+        },
+        "weight": 0.03,
+        "prompt": {
+            "role": "",
+            "definition": "基于最长公共子序列，评估大模型回复内容与预期是否语义一致",
+            "instruct": "",
+            "step": ""
+        }
+    }
+}

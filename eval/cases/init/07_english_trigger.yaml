@@ -1,0 +1,30 @@
+id: init_07_english_trigger
+name: 英文输入触发边界测试
+stage: init
+priority: P1
+
+instruction: "evaluate the performance of my-awesome-skill"
+
+fixtures:
+  check-token:
+    status: valid
+    expires_at: "2026-07-01T00:00:00Z"
+  recent-tasks:
+    tasks: []
+
+expected_behavior: |
+  英文输入的触发能力边界测试。
+  若触发成功，应正常进入场景推断（用户已含 Skill 名），不展示历史。
+
+assertions:
+  hard:
+    rules: []
+    custom:
+      - type: text_absent
+        pattern: "最近的评测任务"
+        scope: first_text_output
+      - type: tool_param_check
+        tool: TodoWrite
+        param_path: "todos.0.content"
+        expected: "确认评测场景"
+  soft: all

@@ -1,0 +1,30 @@
+{
+  "scenario": "自定义场景",
+  "description": "请填写场景描述",
+  "dimensions": [
+    {
+      "name": "维度1名称",
+      "description": "维度1的详细描述",
+      "weight": 0.25,
+      "criteria": "1-5分评分标准说明"
+    },
+    {
+      "name": "维度2名称",
+      "description": "维度2的详细描述",
+      "weight": 0.25,
+      "criteria": "1-5分评分标准说明"
+    },
+    {
+      "name": "维度3名称",
+      "description": "维度3的详细描述",
+      "weight": 0.25,
+      "criteria": "1-5分评分标准说明"
+    },
+    {
+      "name": "维度4名称",
+      "description": "维度4的详细描述",
+      "weight": 0.25,
+      "criteria": "1-5分评分标准说明"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "version": "v0.1",
+  "model": "xopglm51",
+  "timestamp": "2026-06-11T02:29:21.240531+00:00",
+  "summary": {
+    "total_cases": 1,
+    "total_runs": 1,
+    "trigger_rate": 1.0,
+    "pass": 0,
+    "fail": 1,
+    "skip": 0,
+    "unstable": 0,
+    "verdict": "BLOCK",
+    "avg_soft_score": null
+  },
+  "cases": {
+    "init_02_has_history_no_intent": {
+      "priority": "P0",
+      "verdict": "FAIL",
+      "trigger_rate": 1.0,
+      "pass_rate": 0.0,
+      "soft_scores": null,
+      "detail": "0/1 pass, 1/1 fail",
+      "runs": [
+        {
+          "verdict": "FAIL",
+          "duration": 108.14078894490376,
+          "transcript": "/home/mqxu11/projects/claude/skill-evaluation/eval/results/v0.1/workspaces/init_02_has_history_no_intent_run0/transcript.jsonl",
+          "error": null,
+          "hard_results": [
+            {
+              "rule": "H1",
+              "passed": true,
+              "message": "",
+              "description": "首个动作是进度管理工具"
+            },
+            {
+              "rule": "H2",
+              "passed": true,
+              "message": "",
+              "description": "进度工具之前无文本输出"
+            },
+            {
+              "rule": "H3",
+              "passed": true,
+              "message": "",
+              "description": "进度内容为4个固定阶段名"
+            },
+            {
+              "rule": "H4",
+              "passed": true,
+              "message": "",
+              "description": "无禁用术语泄露"
+            },
+            {
+              "rule": "H5",
+              "passed": true,
+              "message": "",
+              "description": "无内部ID/字段泄露"
+            },
+            {
+              "rule": "H6",
+              "passed": true,
+              "message": "",
+              "description": "禁止使用 AskUserQuestion"
+            },
+            {
+              "rule": "H7",
+              "passed": true,
+              "message": "",
+              "description": "选项使用Markdown表格"
+            },
+            {
+              "rule": "semantic_match",
+              "passed": true,
+              "message": "⚠ judge skipped: \"Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\"",
+              "description": "🤖 语义含 \"向用户展示了历史评测任务列表\""
+            },
+            {
+              "rule": "text_present",
+              "passed": false,
+              "message": "Expected text not found: '新建'",
+              "description": "输出含 \"新建\""
+            },
+            {
+              "rule": "text_absent",
+              "passed": true,
+              "message": "",
+              "description": "输出不含 \"eval-3g5k9m\""
+            },
+            {
+              "rule": "format_check:markdown_table",
+              "passed": true,
+              "message": "",
+              "description": "格式: markdown_table"
+            }
+          ],
+          "soft_result": null
+        }
+      ]
+    }
+  }
+}

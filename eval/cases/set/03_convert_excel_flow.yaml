@@ -1,0 +1,91 @@
+id: set_03_convert_excel_flow
+name: Excel 转换并上传完整流程
+stage: set
+priority: P0
+timeout: 180
+instruction: 继续 skill 评测，为 my-skill 上传评测数据文件 test_data.xlsx
+pre_state:
+  session_id: 20260610_100000_my-skill
+  files:
+    auth.json:
+      access_token: mock-token
+      expires_at: '2026-07-01T00:00:00Z'
+    eval-runtimes.json:
+    - type: claude-code
+    eval-models.json:
+    - id: model-a
+      display_name: Model Alpha
+      source: cloud
+    eval-judge.json:
+      id: model-j
+      display_name: Judge Pro
+      source: cloud
+fixtures:
+  check-token:
+    status: valid
+    expires_at: '2026-07-01T00:00:00Z'
+  recent-tasks:
+    tasks: []
+  search-skill:
+    skills:
+    - name: my-skill
+      display_name: My Skill
+      description: A test skill
+      source: cloud
+  session:
+    status: ok
+    session_id: 20260610_100000_my-skill
+  package:
+    status: ok
+    skill_zip_url: https://example.com/skills/my-skill.zip
+  models:
+    models:
+    - id: model-a
+      display_name: Model Alpha
+      source: cloud
+    - id: model-j
+      display_name: Judge Pro
+      source: cloud
+  convert-excel:
+    status: ok
+    case_count: 25
+  upload-dataset:
+    status: ok
+    dataset_id: ds-excel-001
+  check-dataset:
+    needs_completion: false
+    missing_fields: []
+    empty_category_count: 0
+    empty_keypoint_count: 0
+expected_behavior: '用户指定 Excel 文件时：
+
+  1. 静默调用 convert-excel 转换
+
+  2. 静默调用 upload-dataset 上传
+
+  3. 不暴露 dataset_id、不输出过程描述
+
+  4. 完成后简短确认
+
+  '
+assertions:
+  hard:
+    rules: []
+    custom:
+    - type: text_absent
+      pattern: ds-excel-001
+      scope: all_text
+    - type: text_absent
+      pattern: convert-excel
+      scope: all_text
+    - type: text_absent
+      pattern: upload-dataset
+      scope: all_text
+    - type: regex_absent
+      pattern: 正在(转换|上传|处理)
+      scope: all_text
+    - type: tool_order
+      tools:
+      - TodoWrite
+      - Bash
+  soft: all

@@ -1,0 +1,51 @@
+id: build_03_auto_fill_from_context
+name: 上下文已含 Skill 名和模型名，自动填充
+stage: build
+priority: P0
+instruction: 用 Model Alpha 评测 my-skill 的快速效果
+fixtures:
+  check-token:
+    status: valid
+    expires_at: '2026-07-01T00:00:00Z'
+  recent-tasks:
+    tasks: []
+  search-skill:
+    skills:
+    - name: my-skill
+      id: skill-003
+      description: Auto fill test skill
+  models:
+    models:
+    - id: model-a
+      display_name: Model Alpha
+      usage: candidate
+      source: cloud
+    - id: model-j
+      display_name: Judge Pro
+      usage: judge
+      source: cloud
+  session:
+    status: ok
+    session_id: 20260610_120000_my-skill
+  package:
+    status: ok
+    skill_zip_url: https://example.com/skills/my-skill.zip
+expected_behavior: '用户输入已明确 Skill 名称和模型名称时，自动填充，跳过询问。
+
+  不应再次询问"选择 Skill"或"选择模型"。
+
+  '
+assertions:
+  hard:
+    rules: []
+    custom:
+    - type: text_absent
+      pattern: skill-003
+      scope: all_text
+    - type: semantic_match
+      pattern: "跳过了Skill选择和模型选择的询问步骤，直接进入后续流程"
+      scope: all_text
+    - type: semantic_absent
+      pattern: "询问用户选择哪个Skill或选择哪个模型"
+      scope: all_text
+  soft: all

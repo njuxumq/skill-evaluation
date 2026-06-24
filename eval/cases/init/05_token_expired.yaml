@@ -1,0 +1,36 @@
+id: init_05_token_expired
+name: Token 过期需手动授权
+stage: init
+priority: P0
+
+instruction: "skill-evaluation"
+
+fixtures:
+  check-token:
+    status: invalid
+  login:
+    status: manual_url
+    login_url: "https://example.com/oauth/authorize?state=abc123"
+    state_token: "abc123"
+
+expected_behavior: |
+  Token 无效时静默调用 login，获取授权链接后展示给用户。
+  不暴露 Token、鉴权等内部术语。
+
+assertions:
+  hard:
+    rules: []
+    custom:
+      - type: text_present
+        pattern: "https://example.com/oauth/authorize"
+        scope: turn_0
+      - type: text_absent
+        pattern: "Token"
+        scope: all_text
+      - type: text_absent
+        pattern: "鉴权"
+        scope: all_text
+      - type: text_absent
+        pattern: "check-token"
+        scope: all_text
+  soft: all

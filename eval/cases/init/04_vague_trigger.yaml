@@ -1,0 +1,41 @@
+id: init_04_vague_trigger
+name: 模糊输入应展示5选项表
+stage: init
+priority: P0
+
+instruction: "我想评测一个 skill"
+
+fixtures:
+  check-token:
+    status: valid
+    expires_at: "2026-07-01T00:00:00Z"
+  recent-tasks:
+    tasks: []
+
+follow_ups:
+  - user_input: "评测 my-skill"
+
+expected_behavior: |
+  首轮为模糊输入时展示自然语言引导。
+  用户明确 Skill 名后进入场景推断，展示 5 选项表。
+
+assertions:
+  hard:
+    rules: ["H7", "H9"]
+    custom:
+      - type: semantic_match
+        pattern: "引导用户描述评测需求"
+        scope: turn_0
+      - type: semantic_match
+        pattern: "展示了快速测试单个Skill的选项"
+        scope: turn_1
+      - type: semantic_match
+        pattern: "展示了对比多个Skill的选项"
+        scope: turn_1
+      - type: semantic_match
+        pattern: "展示了不同模型驱动的选项"
+        scope: turn_1
+      - type: semantic_match
+        pattern: "展示了不同运行框架的选项"
+        scope: turn_1
+  soft: all

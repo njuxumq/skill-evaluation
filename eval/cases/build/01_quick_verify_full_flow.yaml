@@ -1,0 +1,65 @@
+id: build_01_quick_verify_full_flow
+name: 快速效果验证完整流程
+stage: build
+priority: P0
+instruction: 评测 my-skill 的效果
+fixtures:
+  check-token:
+    status: valid
+    expires_at: '2026-07-01T00:00:00Z'
+  recent-tasks:
+    tasks: []
+  search-skill:
+    skills:
+    - name: my-skill
+      id: skill-001
+      description: A test skill for evaluation
+  models:
+    models:
+    - id: model-a
+      display_name: Model Alpha
+      usage: candidate
+      source: cloud
+    - id: model-b
+      display_name: Model Beta
+      usage: candidate
+      source: cloud
+    - id: model-j
+      display_name: Judge Model
+      usage: judge
+      source: cloud
+  session:
+    status: ok
+    session_id: 20260610_120000_my-skill
+  package:
+    status: ok
+    skill_zip_url: https://example.com/skills/my-skill.zip
+follow_ups:
+- user_input: '1'
+- user_input: '1'
+expected_behavior: '快速效果验证场景：单 Skill、单模型、自动推荐评委。
+
+  应展示 Skill 确认、模型列表（无推荐标注）、自动选择评委。
+
+  '
+assertions:
+  hard:
+    rules:
+    - H8
+    custom:
+    - type: text_present
+      pattern: my-skill
+      scope: all_text
+    - type: text_absent
+      pattern: skill-001
+      scope: all_text
+    - type: text_absent
+      pattern: 推荐
+      scope: all_text
+    - type: semantic_match
+      pattern: "展示了评测场景选项供用户选择"
+      scope: turn_0
+    - type: semantic_match
+      pattern: "展示了可用的驱动模型列表"
+      scope: turn_1
+  soft: all

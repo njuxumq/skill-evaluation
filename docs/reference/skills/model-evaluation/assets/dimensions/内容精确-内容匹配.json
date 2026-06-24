@@ -1,0 +1,21 @@
+{
+    "name": "内容精确",
+    "description": "大模型回复是否符合预期",
+    "type": "通用维度级评测",
+    "config": {
+        "name": "内容精确",
+        "type": "builtin",
+        "func": "EQUAL",
+        "params": {
+            "answer": "answer",
+            "reference": "reference"
+        },
+        "weight": 0.5,
+        "prompt": {
+            "role": "",
+            "definition": "大模型回复是否符合预期",
+            "instruct": "",
+            "step": ""
+        }
+    }
+}

@@ -1,0 +1,5 @@
+# Ignore all model configs (contain API keys)
+*.json
+
+# Keep the example
+!example.json

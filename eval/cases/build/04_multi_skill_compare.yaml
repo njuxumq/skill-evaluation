@@ -1,0 +1,68 @@
+id: build_04_multi_skill_compare
+name: 对比多个同类 Skill 场景
+stage: build
+priority: P1
+instruction: 对比 skill-a 和 skill-b 哪个效果好
+fixtures:
+  check-token:
+    status: valid
+    expires_at: '2026-07-01T00:00:00Z'
+  recent-tasks:
+    tasks: []
+  search-skill:
+    skills:
+    - name: skill-a
+      id: skill-101
+      description: First skill
+    - name: skill-b
+      id: skill-102
+      description: Second skill
+  models:
+    models:
+    - id: model-x
+      display_name: Model X
+      usage: candidate
+      source: cloud
+    - id: model-judge
+      display_name: Judge Standard
+      usage: judge
+      source: cloud
+  session:
+    status: ok
+    session_id: 20260610_120000_my-skill
+  package:
+    status: ok
+    skill_zip_url: https://example.com/skills/my-skill.zip
+follow_ups:
+- user_input: '1'
+expected_behavior: '多 Skill 对比场景：用户输入包含多个 Skill 名称时，
+
+  应自动推断为"对比多个同类 Skill"场景。
+
+  展示确认信息时使用表格格式，不暴露内部 ID。
+
+  '
+assertions:
+  hard:
+    rules:
+    - H7
+    - H8
+    custom:
+    - type: text_absent
+      pattern: skill-101
+      scope: all_text
+    - type: text_absent
+      pattern: skill-102
+      scope: all_text
+    - type: text_present
+      pattern: skill-a
+      scope: all_text
+    - type: text_present
+      pattern: skill-b
+      scope: all_text
+    - type: tool_not_called
+      tool: AskUserQuestion
+    - type: regex_match
+      pattern: \|.*\|.*\|
+      scope: all_text
+  soft: all

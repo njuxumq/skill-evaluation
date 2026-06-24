@@ -1,0 +1,37 @@
+{
+    "name": "内容匹配",
+    "description": "通过计算模型输出与真实标注文本之间的相似度（如 ROUGE、BLEU 等），评测其在标准问答、选择题、简答题等场景下的表现。",
+    "type": "通用维度级评测",
+    "evals": [
+        {
+            "name": "内容精确",
+            "type": "builtin",
+            "params": {
+                "answer": "answer",
+                "reference": "reference"
+            },
+            "prompt": {
+                "role": "",
+                "definition": "大模型回复是否符合预期",
+                "instruct": "",
+                "step": ""
+            },
+            "func": "EQUAL"
+        },
+        {
+            "name": "格式遵循",
+            "type": "builtin",
+            "params": {
+                "answer": "answer",
+                "reference": "reference"
+            },
+            "prompt": {
+                "role": "",
+                "definition": "大模型回复格式是否符合json",
+                "instruct": "",
+                "step": ""
+            },
+            "func": "JSONFORMAT"
+        }
+    ]
+}

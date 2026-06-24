@@ -1,0 +1,43 @@
+id: init_03_explicit_single_skill
+name: 用户明确描述需求，场景信号清晰
+stage: init
+priority: P0
+
+instruction: "我想评测下 smart-test-plan Skill 的效果"
+
+fixtures:
+  check-token:
+    status: valid
+    expires_at: "2026-07-01T00:00:00Z"
+  recent-tasks:
+    tasks:
+      - session_id: "20260607_090000_xyz"
+        skill_name: "other-skill"
+        status: "completed"
+        task_id: "eval-abc123"
+        progress: 100
+        created_at: "2026-06-07T09:00:00Z"
+  search-skill:
+    skills:
+      - name: "smart-test-plan"
+        id: "skill-stp-001"
+        description: "An AI test plan generator"
+
+follow_ups:
+  - user_input: "1"
+
+expected_behavior: |
+  用户已明确 Skill 名称时，跳过历史任务展示，直接进入场景推断。
+  展示场景选项表供用户选择。
+
+assertions:
+  hard:
+    rules: []
+    custom:
+      - type: semantic_absent
+        pattern: "展示历史评测任务列表"
+        scope: all_text
+      - type: semantic_match
+        pattern: "提及了快速测试场景"
+        scope: all_text
+  soft: all

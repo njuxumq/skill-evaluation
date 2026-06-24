@@ -1,0 +1,21 @@
+{
+    "name": "格式遵循",
+    "description": "大模型回复格式是否符合json",
+    "type": "通用维度级评测",
+    "config": {
+        "name": "格式遵循",
+        "type": "builtin",
+        "func": "JSONFORMAT",
+        "params": {
+            "answer": "answer",
+            "reference": "reference"
+        },
+        "weight": 0.5,
+        "prompt": {
+            "role": "",
+            "definition": "大模型回复格式是否符合json",
+            "instruct": "",
+            "step": ""
+        }
+    }
+}

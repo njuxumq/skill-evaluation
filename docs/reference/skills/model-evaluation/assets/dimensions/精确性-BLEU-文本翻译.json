@@ -1,0 +1,21 @@
+{
+    "name": "精确性-BLEU",
+    "description": "用于基于n-gram精确度的翻译质量评估，计算大模型回复内容与预期内容的重叠程度",
+    "type": "通用维度级评测",
+    "config": {
+        "name": "精确性-BLEU",
+        "type": "builtin",
+        "func": "BLEU",
+        "params": {
+            "answer": "answer",
+            "reference": "reference"
+        },
+        "weight": 0.04,
+        "prompt": {
+            "role": "",
+            "definition": "用于基于n-gram精确度的翻译质量评估，计算大模型回复内容与预期内容的重叠程度",
+            "instruct": "",
+            "step": ""
+        }
+    }
+}

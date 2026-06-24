@@ -1,0 +1,28 @@
+id: init_01_fresh_no_history
+name: 全新用户首次触发，无历史任务
+stage: init
+priority: P0
+
+instruction: "skill-evaluation"
+
+fixtures:
+  check-token:
+    status: valid
+    expires_at: "2026-07-01T00:00:00Z"
+  recent-tasks:
+    tasks: []
+
+expected_behavior: |
+  无历史任务时，展示自然语言引导（含 xxx Skill 占位符），不展示历史任务表。
+
+assertions:
+  hard:
+    rules: ["H9"]
+    custom:
+      - type: semantic_match
+        pattern: "引导用户描述评测需求"
+        scope: all_text
+      - type: text_absent
+        pattern: "最近的评测任务"
+        scope: all_text
+  soft: all

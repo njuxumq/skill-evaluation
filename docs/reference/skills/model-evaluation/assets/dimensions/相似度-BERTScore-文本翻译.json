@@ -1,0 +1,21 @@
+{
+    "name": "相似度-BERTScore",
+    "description": "基于BERT模型的语义相似度，评估大模型回复内容与预期是否语义一致",
+    "type": "通用维度级评测",
+    "config": {
+        "name": "相似度-BERTScore",
+        "type": "builtin",
+        "func": "BERTScore",
+        "params": {
+            "answer": "answer",
+            "reference": "reference"
+        },
+        "weight": 0.4,
+        "prompt": {
+            "role": "",
+            "definition": "基于BERT模型的语义相似度，评估大模型回复内容与预期是否语义一致",
+            "instruct": "",
+            "step": ""
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "name": "文本差异度-TER",
+    "description": "用于通过翻译编辑率计算生成文本与参考文本之间的编辑距离，衡量两者在字面形式上的差异程度",
+    "type": "通用维度级评测",
+    "config": {
+        "name": "文本差异度-TER",
+        "type": "builtin",
+        "func": "TER",
+        "params": {
+            "answer": "answer",
+            "reference": "reference"
+        },
+        "weight": 0.03,
+        "prompt": {
+            "role": "",
+            "definition": "用于通过翻译编辑率（Translation Edit Rate）计算生成文本与参考文本之间的编辑距离，即插入、删除、替换词语的比例，用于衡量两者在字面形式上的差异程度。",
+            "instruct": "",
+            "step": ""
+        }
+    }
+}
