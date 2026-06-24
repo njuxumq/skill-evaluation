@@ -2,7 +2,7 @@
 name: skill-evaluation
 description: 对 Skill 进行自动化评测，并输出评测报告。支持单 Skill 验证、多 Skill 横评、多模型对比、运行框架对比。当用户提到"评测 skill"、"跑评测"、"测一下这个 skill"、"对比 skill 效果"、"横评"、"验证 skill 表现"时触发。
 user-invocable: true
-version: 1.0.0
+version: 1.0.1
 ---
 
 # Skill 评测技能
